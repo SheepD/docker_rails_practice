@@ -1,24 +1,24 @@
-# README
+​ # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a sample Rails application from Docker for Rails Developers (PragProg).
+It was generated using Docker without Ruby installed on the local machine.
+We're using the app to discover the wonderful world of Rails with Docker. 
 
-Things you may want to cover:
+## TODO When building a rails docker app
 
-* Ruby version
+* create `Dockerfile`
+* create `.dockerignore`
+* create `docker-compose.yml`
+* add `STDOUT.sync = true` to top of `config/boot.rb`
+* 
 
-* System dependencies
+## Docker Cheatsheet
 
-* Configuration
+```
+$ docker run [options] [image] [command for image]
+```
 
-* Database creation
+### options
+* `-v $PWD:/place/to/mount/to` - mount volume
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## docker-compose cheatsheet
