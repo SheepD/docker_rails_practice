@@ -7,10 +7,14 @@ RUN apt-get update -yqq && apt-get install --no-install-recommends -yqq \
   apt-transport-https
 
 # install an updated version of node
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+
+# remove cmdtest cause of yarn conflict
+# https://github.com/yarnpkg/yarn/issues/2821#issuecomment-306101401
+RUN apt-get remove -yqq cmdtest
 
 # ensure latest packages for yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add ​-
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
   tee /etc/apt/sources.list.d/yarn.list
 
@@ -22,6 +26,7 @@ RUN apt-get update -yqq && apt-get install --no-install-recommends -yqq \
 COPY Gemfile* /usr/src/app/
 WORKDIR /usr/src/app
 RUN bundle install
+RUN yarn
 
 COPY . /usr/src/app/
 
