@@ -26,6 +26,8 @@ RUN apt-get update -yqq && apt-get install --no-install-recommends -yqq \
 COPY Gemfile* /usr/src/app/
 WORKDIR /usr/src/app
 RUN bundle install
+COPY package.json /usr/src/app/
+COPY yarn.lock /usr/src/app/
 RUN yarn
 
 COPY . /usr/src/app/
