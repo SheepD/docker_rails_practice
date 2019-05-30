@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  web:
+    image: sheepd/docker_rails_practice_web:prod
+    ports:
+      - "80:3000"
+    env_file:
+      - .env/production/database
+      - .env/production/web
+    deploy:
+      replicas: 2
+
+  redis:
+    image: redis
+
+  database:
+    image: postgres
+    env_file:
+      - .env/production/database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  db-migrator:
+    image: sheepd/docker_rails_practice_web:prod
+    command: ["./wait-for", "--timeout=300", "database:5432", "--", "bin/rails", "db:migrate"]
+    env_file:
+      - .env/production/database
+      - .env/production/web
+    deploy:
+      restart_policy:
+        condition: none
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+volumes:
+  db_data:

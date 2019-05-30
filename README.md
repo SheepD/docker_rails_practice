@@ -73,3 +73,30 @@ Removing a machine
 ```
 $ docker-machine rm MACHINE
 ```
+
+Switch docker-machine context
+```
+# moving to a docker-machine
+$ eval ​​$(docker-machine env ​​do-manager-1)
+
+# moving back to local context
+$ eval​​ $(docker-machine​​ env ​​-u)
+```
+
+deploying your stack
+```
+$ docker​​ stack ​​deploy ​​c ​​docker-stack.yml docker_rails_practice
+# same command to update it, or to update only a single service
+
+$ docker ​​service ​​update ​​--image sheepd/docker_rails_practice_web:prod docker_rails_practice_web
+```
+
+checking the status of your stack
+```
+$ docker stack ps docker_rails_practice
+```
+
+scaling the service via cli
+```
+$ docker service scale docker_rails_practice_web=3
+```
